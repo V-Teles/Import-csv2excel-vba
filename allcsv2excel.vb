@@ -5,21 +5,18 @@ Sub Macro1()
 ' Macro1 Macro
 '
     Dim strFile As String, strPath As String
-    
 
-    strPath = "C:\Users\belotelesvh\OneDrive - NTT Data EMEA\Desktop\DQ\"
+    strPath = "C:\Users\victor\Desktop\DQ\"
     strFile = Dir(strPath & "*.csv")
-    strPath = "TEXT;" & strPath
 
-'
     While strFile <> ""
 
         ActiveWorkbook.Sheets.Add After:=Worksheets(Worksheets.Count)
         ActiveWorkbook.Sheets(Worksheets.Count).Name = Right(Left(strFile, InStr(strFile, ".csv") - 1), InStr(strFile, ".csv") - 7)
         
-        With ActiveSheet.QueryTables.Add(Connection:=strPath & strFile, Destination:=Range("$A$1"))
+        With ActiveSheet.QueryTables.Add(Connection:="TEXT;" & strPath & strFile, Destination:=Range("$A$1"))
     '        .CommandType = 0
-            .Name = strFile
+            .Name = Left(strFile, InStr(strFile, ".csv") - 1)
             .FieldNames = True
             .RowNumbers = False
             .FillAdjacentFormulas = False
@@ -49,11 +46,17 @@ Sub Macro1()
             
             
         End With
+        
         Selection.AutoFilter
         strFile = Dir
+        
     Wend
 
 End Sub
+
+
+
+
 
 
 
